@@ -45,7 +45,7 @@ Project này cung cấp những nội dung sau:
 - [Hyper-ConvertImage](https://github.com/tabs-not-spaces/Hyper-ConvertImage) đã tạo ra phiên bản được nâng cấp của [Convert-WindowsImage](https://github.com/MicrosoftDocs/Virtualization-Documentation/tree/master/hyperv-tools/Convert-WindowsImage) hỗ trợ cho cả Windows 10 và Windows 11.
 - [gawainXX](https://github.com/gawainXX) giúp đỡ [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) trong việc thử nghiệm, chỉ ra lỗi và cải tiến tính năng.  
 
-### Notes:    
+### Lưu ý:    
 - Nếu mọi người cài đặt driver màn hình ảo của Parsec (Parsec Virtual Display Driver), sau khi đăng nhập vào Parsec trên máy ảo, hãy luôn sử dụng Parsec để kết nối với máy ảo. Luôn giữ cho driver Microsft Hyper-V Video tắt. Sử dụng RDP và chế độ nâng cao của Hyper-V (Enhanced Session) sẽ dẫn đến hiện tượng lỗi và màn hình đen trong Parsec. Sử dụng Parsec sẽ cho phép mọi người trải nghiệm với độ phân giải đạt 4K60FPS.
 - Nếu gặp lỗi "ERROR: Cannot bind argument to parameter 'Path' because it is null.", điều này có nghĩa là mọi người đã sử dụng Media Creation Tool để tải và tạo file ISO. Thật tiếc là mọi người không thể sử dụng tool này nếu như không thấy liên kết tải xuống ISO trực tiếp trên trang web của Microsoft (static link), hãy làm theo [hướng dẫn này.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)  
 - GPU trong máy vật lý của mọi người sẽ có tên đầu driver là Microsoft trong Device Manager, thay vì tên đầu driver gốc NVIDIA/Intel/AMD. Miễn là nó không có hình tam giác màu vàng ở trên cùng của thiết bị, thì nó vẫn hoạt động bình thường.
