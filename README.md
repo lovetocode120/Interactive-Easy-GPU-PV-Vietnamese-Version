@@ -26,7 +26,7 @@ Project này cung cấp những nội dung sau:
 ### Hướng dẫn cách làm:
 Để bắt đầu với Interactive-Easy-GPU-PV, mọi người hãy làm theo các bước sau:
 1) Hãy chắc chắn rằng máy vật lý của mọi người đạt đủ điều kiện được nhắc đến trong document này.
-2) Tải file [Interactive-Easy-GPU-PV repository](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
+2) Tải file [Interactive-Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
 3) Tìm và mở app Windows Powershell ISE trên máy và chạy app như một quản trị viên (admin).
 4) Tìm thư mục đã giải nén mà mọi người đã download xong và chạy script có tên "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN" (đối với những ai chưa quen tiếng Anh). Chọn "Tạo máy ảo mới với GPU tăng tốc đồ họa" hay "Create new VMInteractive-Easy-GPU-PV 
 Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV). Mục tiêu của project này là đơn giản hóa toàn bộ quy trình càng nhiều càng tốt. Script chính có tính tương tác khá nhiều, vì vậy mọi người không cần phải setting trước bất kỳ tham số (parameters) nào. Thay vào đó, các tham số có thể được chọn trong khi script đang chạy, giúp quy trình dễ dàng hơn nhiều.
