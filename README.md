@@ -1,4 +1,4 @@
-# Interactive-Easy-GPU-PV 
+# Interactive-Easy-GPU-PV-Vietnamese-Version
 Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV). Mục tiêu của project này là đơn giản hóa toàn bộ quy trình càng nhiều càng tốt. Script chính có tính tương tác khá nhiều, vì vậy mọi người không cần phải setting trước bất kỳ tham số (parameters) nào. Thay vào đó, các tham số có thể được chọn trong khi script đang chạy, giúp quy trình dễ dàng hơn nhiều.
 
 ![Administrator_-PowerShell-2023-03-21-16-38-00](https://user-images.githubusercontent.com/77991615/226651194-032db39b-291a-4cd4-a231-da5a215c9eee.gif)
