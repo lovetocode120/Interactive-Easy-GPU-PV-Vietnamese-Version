@@ -40,17 +40,19 @@ Project này cung cấp những nội dung sau:
 2) Mở PowerShell ISE với tư cách admin, tìm thư mục giải nén Interactive-Easy-GPU-PV và chạy script "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN".
 3) Bấm số 3: "Copy GPU Drivers from Host to VM" hoặc "Sao chép toàn bộ file driver GPU từ máy vật lý tới máy ảo". Nó sẽ copy toàn bộ file driver GPU được update từ máy vật lý tới máy ảo.
 
-
 ### Đặc biệt gửi lời cảm ơn tới:  
 - [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) đã tạo ra Easy-GPU-PV được coi là tài liệu gốc cũng như phần chính của tài liệu hướng dẫn này.
 - [Hyper-ConvertImage](https://github.com/tabs-not-spaces/Hyper-ConvertImage) đã tạo ra phiên bản được nâng cấp của [Convert-WindowsImage](https://github.com/MicrosoftDocs/Virtualization-Documentation/tree/master/hyperv-tools/Convert-WindowsImage) hỗ trợ cho cả Windows 10 và Windows 11.
 - [gawainXX](https://github.com/gawainXX) giúp đỡ [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) trong việc thử nghiệm, chỉ ra lỗi và cải tiến tính năng.  
 
-### Lưu ý:    
-- Nếu mọi người cài đặt driver màn hình ảo của Parsec (Parsec Virtual Display Driver), sau khi đăng nhập vào Parsec trên máy ảo, hãy luôn sử dụng Parsec để kết nối với máy ảo. Luôn giữ cho driver Microsft Hyper-V Video tắt. Sử dụng RDP và chế độ nâng cao của Hyper-V (Enhanced Session) sẽ dẫn đến hiện tượng lỗi và màn hình đen trong Parsec. Sử dụng Parsec sẽ cho phép mọi người trải nghiệm với độ phân giải đạt 4K60FPS. 
-- Nếu gặp lỗi "ERROR  : Cannot bind argument to parameter 'Path' because it is null.", điều này có nghĩa là mọi người đã sử dụng Media Creation Tool để tải và tạo file ISO. Thật tiếc là mọi người không thể sử dụng tool này nếu không thấy liên kết tải xuống ISO trực tiếp trên trang web của Microsoft (static link), hãy làm ảo khi Parsec được cài đặt, đừng quá lo. Driver này sẽ sớm được cài đặt trên máy ảo.
+### Notes:    
+- Nếu mọi người cài đặt driver màn hình ảo của Parsec (Parsec Virtual Display Driver), sau khi đăng nhập vào Parsec trên máy ảo, hãy luôn sử dụng Parsec để kết nối với máy ảo. Luôn giữ cho driver Microsft Hyper-V Video tắt. Sử dụng RDP và chế độ nâng cao của Hyper-V (Enhanced Session) sẽ dẫn đến hiện tượng lỗi và màn hình đen trong Parsec. Sử dụng Parsec sẽ cho phép mọi người trải nghiệm với độ phân giải đạt 4K60FPS.
+- Nếu gặp lỗi "ERROR: Cannot bind argument to parameter 'Path' because it is null.", điều này có nghĩa là mọi người đã sử dụng Media Creation Tool để tải và tạo file ISO. Thật tiếc là mọi người không thể sử dụng tool này nếu như không thấy liên kết tải xuống ISO trực tiếp trên trang web của Microsoft (static link), hãy làm theo [hướng dẫn này.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)  
+- GPU trong máy vật lý của mọi người sẽ có tên đầu driver là Microsoft trong Device Manager, thay vì tên đầu driver gốc NVIDIA/Intel/AMD. Miễn là nó không có hình tam giác màu vàng ở trên cùng của thiết bị, thì nó vẫn hoạt động bình thường.
+- Cần phải cắm một cáp dongle giả lập HDMI vào GPU để Parsec có thể ghi lại màn hình. Bạn chỉ cần một cáp dongle giả lập này cho mỗi máy vật lý bất kể số lượng máy ảo.
+- Nếu máy tính của mọi người chạy nhanh, có thể máy sẽ chuyển thẳng đến màn hình đăng nhập trước khi driver card âm thanh ảo (VB-AUDIO Cable) và driver màn hình ảo khi Parsec được cài đặt, đừng quá lo. Driver này sẽ sớm được cài đặt trên máy ảo.  
 - Màn hình có thể chuyển sang màu đen trong thời gian lên đến 10 giây trong những trường hợp thông báo UAC (User Account Control) xuất hiện, ứng dụng vào và ra khỏi chế độ toàn màn hình và khi chuyển đổi giữa các codec video trong Parsec - không thực sự chắc chắn tại sao điều này lại xảy ra, hiện tượng này chỉ xảy ra với máy GPU-P và có vẻ phục hồi nhanh hơn ở độ phân giải 1280x720.
-- Kết xuất Vulkan không khả dụng và trò chơi hỗ trợ OpenGL có thể hoạt động hoặc không, tùy vào từng game mọi người cài trên máy ảo. [Link này](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff?SilentAuth=1&wa=wsignin1.0#activetab=pivot:overviewtab) có thể giúp với một số ứng dụng hỗ trợ OpenGL.  
-- Nếu mọi người không có quyền quản trị viên trên máy, điều đó có nghĩa là mọi người đã đặt tên người dùng và tên máy ảo giống nhau, hai tham số này phải khác nhau. 
+- Kết xuất Vulkan không khả dụng và trò chơi hỗ trợ OpenGL có thể hoạt động hoặc không, tùy vào từng game mọi người cài trên máy ảo. [Link này](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff?SilentAuth=1&wa=wsignin1.0#activetab=pivot:overviewtab) có thể giúp với một số ứng dụng hỗ trợ OpenGL.
+- Nếu mọi người không có quyền quản trị viên trên máy ảo, điều đó có nghĩa là mọi người đã đặt tên người dùng và tên máy ảo giống nhau, hai tham số này phải khác nhau.
 - Các card đồ họa thuộc kiến trúc AMD Polaris như RX 580 hiện không hỗ trợ mã hóa video phần cứng thông qua ảo hóa nửa phần GPU.
 - Để tải và cài file ISO Windows sử dụng Rufus, phải bật "Check for updates".
