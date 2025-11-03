@@ -29,7 +29,7 @@ Project này cung cấp những nội dung sau:
 2) Tải file [Interactive-Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
 3) Tìm và mở app Windows Powershell ISE trên máy và chạy app như một quản trị viên (admin).
 4) Tìm thư mục đã giải nén mà mọi người đã download xong và chạy script có tên "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN" (đối với những ai chưa biết tiếng Anh). Chọn "Tạo máy ảo mới với GPU tăng tốc đồ họa" hay "Create new VM with GPU acceleration" và setting các thông số cần thiết. Script sẽ bắt đầu tạo máy ảo sau khi setting tham số xong, có thể mất 5-10 phút tùy thuộc vào hệ thống của mọi người.
-5) Sau khi tạo xong máy ảo, hãy mở và đăng nhập vào Parsec trên giao diện máy ảo Windows. Mọi người có thể dùng Parsec để connect với máy ảo lên đến 4K60FPS (cần có điều kiện mạng tốt - Wi-Fi 5 trở lên hoặc LAN).
+5) Sau khi tạo xong máy ảo, hãy mở và đăng nhập vào Parsec trên giao diện máy ảo Windows. Mọi người có thể dùng Parsec để connect tới máy ảo với độ phân giải lên đến 4K60FPS (cần có điều kiện mạng tốt - Wi-Fi 5 trở lên hoặc LAN).
 6) Mọi việc đã xong, giờ mọi người có thể dùng luôn hoặc share cho bạn bè, hay ai đó không đủ điều kiện mua máy mới hoặc tiền nạp net cỏ.
 
 ### Nâng cấp driver GPU của máy ảo Hyper-V sau khi cập nhật driver GPU trên máy vật lý
