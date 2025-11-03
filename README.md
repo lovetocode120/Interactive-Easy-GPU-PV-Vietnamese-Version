@@ -1,4 +1,4 @@
-Interactive-Easy-GPU-PV 
+### Interactive-Easy-GPU-PV 
 Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV). Mục tiêu của project này là đơn giản hóa toàn bộ quy trình càng nhiều càng tốt. Script chính có tính tương tác khá nhiều, vì vậy mọi người không cần phải setting trước bất kỳ tham số (parameters) nào. Thay vào đó, các tham số có thể được chọn trong khi script đang chạy, giúp quy trình dễ dàng hơn nhiều.
 
 ![Administrator_-PowerShell-2023-03-21-16-38-00](https://user-images.githubusercontent.com/77991615/226651194-032db39b-291a-4cd4-a231-da5a215c9eee.gif)
@@ -17,7 +17,7 @@ Project này cung cấp những nội dung sau:
 
 ### Các yêu cầu bắt buộc (PC & laptop requirements):
 * Một chiếc PC hoặc laptop mạnh sử dụng hệ điều hành Windows 10 (20H1 trở lên) với phiên bản Pro, Enterprise, Education, hoặc Windows 11 Pro, Enterprise, Education và Windows Server 2022. Windows 11 và Windows Server 2022 được ưu tiên vì khả năng tương thích (pass requirements) tốt hơn. Máy vật lý và máy ảo phải có phiên bản Windows giống nhau, vì việc không giống version của hệ điều hành có thể gây ra lỗi tương thích, BSOD hoặc các vấn đề khác. Ví dụ: Win11 25H2 (vật lý) đi cùng với Win11 25H2 (máy ảo).
-* PC cá nhân có card đồ họa rời như NVIDIA/AMD hoặc card đồ họa tích hợp như Intel. GPU phải hỗ trợ mã hóa video phần cứng (NVIDIA NVENC, Intel Quicksync hoặc AMD AMF).
+* PC cá nhân hay laptop có gắn card đồ họa rời như NVIDIA/AMD hoặc card đồ họa tích hợp như Intel. GPU phải hỗ trợ mã hóa video phần cứng (NVIDIA NVENC, Intel Quicksync hoặc AMD AMF).
 * Driver GPU phiên bản mới nhất từ ​​[Intel.com](https://www.intel.com/content/www/us/en/search.html#sort=relevancy&f:@tabfilter=[Downloads]&f:@stm_10385_en=[Graphics]) hoặc [AMD.com](https://www.amd.com/en/support) hoặc [NVIDIA.com](https://www.nvidia.com/download/index.aspx). Không nên dựa vào Device Manager hoặc Windows Update để cài driver. Điều quan trọng là phải đảm bảo mọi người đã cài đặt trình điều khiển mới nhất để tránh các sự cố tương thích và đảm bảo hiệu suất tối ưu.
 * File ISO Windows 10 mới nhất chính chủ của Microsoft [link tải tại đây](https://www.microsoft.com/en-gb/software-download/windows10ISO) / Windows 11 ISO [link tải tại đây](https://www.microsoft.com/en-us/software-download/windows11) - Mình khuyên mọi người đừng sử dụng Media Creation Tool, nếu không có link tải ISO trực tiếp (static) nào có sẵn, hãy làm theo [hướng dẫn này.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)
 * Ảo hóa được bật trên bo mạch chủ (VT-x, AMD-V hoặc SVM Mode) và [tính năng Hyper-V đã bật hoàn toàn](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) trên hệ điều hành Windows 10/11 (có yêu cầu khởi động lại).  
@@ -26,7 +26,7 @@ Project này cung cấp những nội dung sau:
 ### Hướng dẫn cách làm:
 Để bắt đầu với Interactive-Easy-GPU-PV, mọi người hãy làm theo các bước sau:
 1) Hãy chắc chắn rằng máy vật lý của mọi người đạt đủ điều kiện được nhắc đến trong document này.
-2) Tải file [Interactive-Easy-GPU-PV repository](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
+2) Tải file [Interactive-Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
 3) Tìm và mở app Windows Powershell ISE trên máy và chạy app như một quản trị viên (admin).
 4) Tìm thư mục đã giải nén mà mọi người đã download xong và chạy script có tên "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN" (đối với những ai chưa biết tiếng Anh). Chọn "Tạo máy ảo mới với GPU tăng tốc đồ họa" hay "Create new VM with GPU acceleration" và setting các thông số cần thiết. Script sẽ bắt đầu tạo máy ảo sau khi setting tham số xong, có thể mất 5-10 phút tùy thuộc vào hệ thống của mọi người.
 5) Sau khi tạo xong máy ảo, hãy mở và đăng nhập vào Parsec trên giao diện máy ảo Windows. Mọi người có thể dùng Parsec để connect với máy ảo lên đến 4K60FPS (cần có điều kiện mạng tốt - Wi-Fi 5 trở lên hoặc LAN).
