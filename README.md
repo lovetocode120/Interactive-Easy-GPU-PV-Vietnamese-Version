@@ -1,59 +1,87 @@
 # Interactive-Easy-GPU-PV 
-A work-in-progress fork of [jamesstringerparse Easy-GPU-PV repository](https://github.com/jamesstringerparsec/Easy-GPU-PV). The goal of the project is to simplify the entire process as much as possible. The main script is interactive, so users don't have to define any parameters in advance. Instead, parameters can be chosen while the script is running, making the process much easier.
+Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV). Mục tiêu của project này là đơn giản hóa toàn bộ quy trình càng nhiều càng tốt. Script chính có tính tương tác khá nhiều, vì vậy mọi người không cần phải setting trước bất kỳ tham số (parameters) nào. Thay vào đó, các tham số có thể được chọn trong khi script đang chạy, giúp quy trình dễ dàng hơn nhiều.
 
 ![Administrator_-PowerShell-2023-03-21-16-38-00](https://user-images.githubusercontent.com/77991615/226651194-032db39b-291a-4cd4-a231-da5a215c9eee.gif)
 
-***The following text is primarily taken from the original Easy-GPU-PV project. I've made some modifications and improvements to ensure that it accurately reflects the current state of the project and provides relevant information.***
+***Nội dung sau đây chủ yếu được trích từ dự án Easy-GPU-PV lúc đầu. Mình đã thực hiện một số sửa đổi, dịch sang ngôn ngữ tiếng Việt và improve để đảm bảo nội dung chính xác tình trạng hiện tại của dự án và cung cấp thông tin liên quan.***
 
-GPU-PV allows you to partition your systems dedicated or integrated GPU and assign it to several Hyper-V VMs.  It's the same technology that is used in WSL2, and Windows Sandbox.  
+GPU-PV cho phép mọi người phân vùng hoặc chia sẻ card đồ họa rời (discrete GPU) hay card đồ họa tích hợp (on-board GPU) và gắn bộ nhớ VRAM của GPU vật lý vào máy ảo Hyper-V. Nó cũng giống như công nghệ dùng trong WSL (Windows Subsystem for Linux), và máy ảo tạm thời Windows Sandbox.
 
-Interactive-Easy-GPU-PV aims to make this easier by automating the steps required to get a GPU-PV VM up and running.  
-This project provides the following...  
-1) Creates a VM of your choosing
-2) Automatically Installs Windows to the VM
-3) Partitions your GPU of choice and copies the required driver files to the VM  
-4) Installs [Parsec](https://parsec.app) to the VM, Parsec is an ultra low latency remote desktop app, use this to connect to the VM.  You can use Parsec for free non commercially. To use Parsec commercially, sign up to a [Parsec For Teams](https://parsec.app/teams) account  
-5) Configures Microsoft Remote Desktop to provide 3D accelerated remote session. Note that 3D acceleration during a Microsoft RDP remote session isn't that perfomance as Parsec Remote Desktop session is.
+Interactive-Easy-GPU-PV hướng đến mục tiêu tự động hóa các bước cần thiết để khởi động và chạy máy ảo được chia sẻ bộ nhớ VRAM từ GPU vật lý.  
+Project này cung cấp những nội dung sau:
+1) Tạo máy ảo có GPU tăng tốc đồ họa theo ý mọi người
+2) Tự động cài Windows vào máy ảo Hyper-V
+3) Phân vùng & chia sẻ bộ nhớ VRAM từ GPU mà mọi người chọn và sao chép các file driver cần thiết của GPU vào máy ảo
+4) Cài đặt [Parsec](https://parsec.app) vào máy ảo Hyper-V. Parsec là app điều khiển máy tính từ xa có độ trễ thấp và support độ phân giải 4K60FPS, mình recommend sử dụng app này để connect với máy ảo. Mọi người có thể xài Parsec miễn phí, không vì mục đích thương mại. Để sử dụng Parsec cho mục đích thương mại, đăng ký tài khoản [Parsec For Teams](https://parsec.app/teams)  
+5) Cài đặt Microsoft Remote Desktop để cung cấp phiên điều khiển từ xa được bật GPU tăng tốc đồ họa 3D. Lưu ý: khả năng tăng tốc 3D trong phiên làm việc từ xa Microsoft RDP kém hơn bằng phiên làm việc từ xa khi dùng Parsec.
 
-### Prerequisites:
-* A desktop computer running Windows 10 20H1+ Pro, Enterprise, or Education, or Windows 11 Pro, Enterprise, or Education, or Windows Server 2022. Windows 11 or Windows Server 2022 is preferred for better compatibility. The host and VM must have matching Windows versions, as mismatches can cause compatibility issues, blue-screens, or other problems. For example, Win10 21H1 + Win10 21H1 or Win11 21H2 + Win11 21H2.
-* PC with dedicated NVIDIA/AMD GPU or integrated Intel GPU. Laptops with NVIDIA GPUs are currently not supported, but Intel integrated GPUs work on laptops. The GPU must support hardware video encoding (NVIDIA NVENC, Intel Quicksync, or AMD AMF).
-* The latest GPU driver from [Intel.com](https://www.intel.com/content/www/us/en/search.html#sort=relevancy&f:@tabfilter=[Downloads]&f:@stm_10385_en=[Graphics]) or [AMD.com](https://www.amd.com/en/support) or [NVIDIA.com](https://www.nvidia.com/download/index.aspx)  (for desktop NVIDIA GPUs, only the GameReady driver is supported). Do not rely on Device Manager or Windows Update to install the driver. It's important to ensure that you have the latest driver installed to avoid compatibility issues and ensure optimal performance.
-* Latest Windows 10 ISO [downloaded from here](https://www.microsoft.com/en-gb/software-download/windows10ISO) / Windows 11 ISO [downloaded from here.](https://www.microsoft.com/en-us/software-download/windows11) - Do not use Media Creation Tool, if no direct ISO link is available, follow [this guide.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)
-* Virtualisation enabled in the motherboard and [Hyper-V fully enabled](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) on the Windows 10/ 11 OS (requires reboot).  
-* Allow Powershell scripts to run on your system - typically by running "Set-ExecutionPolicy unrestricted" in Powershell running as Administrator.  
+### Các yêu cầu bắt buộc (PC & laptop requirements):
+* Một chiếc PC hoặc laptop mạnh sử dụng hệ điều hành Windows 10 (20H1 trở lên) với phiên bản Pro, Enterprise, Education, hoặc Windows 11 Pro, Enterprise, Education và Windows Server 2022. Windows 11 và Windows Server 2022 được ưu tiên vì khả năng tương thích (pass requirements) tốt hơn. Máy vật lý và máy ảo phải có phiên bản Windows giống nhau, vì việc không giống version của hệ điều hành có thể gây ra sự cố tương thích, BSOD hoặc các vấn đề khác. Ví dụ: Win11 25H2 (vật lý) đi cùng với Win11 25H2 (máy ảo).
+* PC cá nhân có card đồ họa rời như NVIDIA/AMD hoặc card đồ họa tích hợp như Intel. GPU phải hỗ trợ mã hóa video phần cứng (NVIDIA NVENC, Intel Quicksync hoặc AMD AMF).
+* Driver GPU phiên bản mới nhất từ ​​[Intel.com](https://www.intel.com/content/www/us/en/search.html#sort=relevancy&f:@tabfilter=[Downloads]&f:@stm_10385_en=[Graphics]) hoặc [AMD.com](https://www.amd.com/en/support) hoặc [NVIDIA.com](https://www.nvidia.com/download/index.aspx). Không nên dựa vào Device Manager hoặc Windows Update để cài driver. Điều quan trọng là phải đảm bảo mọi người đã cài đặt trình điều khiển mới nhất để tránh các sự cố tương thích và đảm bảo hiệu suất tối ưu.
+* File ISO Windows 10 mới nhất chính chủ của Microsoft [link tải tại đây](https://www.microsoft.com/en-gb/software-download/windows10ISO) / Windows 11 ISO [link tải tại đây](https://www.microsoft.com/en-us/software-download/windows11) - Mình khuyên mọi người đừng sử dụng Media Creation Tool, nếu không có link tải ISO trực tiếp (static) nào có sẵn, hãy làm theo [hướng dẫn này.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)
+* Ảo hóa được bật trên bo mạch chủ (VT-x, AMD-V hoặc SVM Mode) và [tính năng Hyper-V đã bật hoàn toàn](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) trên hệ điều hành Windows 10/11 (có yêu cầu khởi động lại).  
+* Cho phép các script PowerShell chạy trên hệ điều hành mà mọi người đang dùng: sử dụng Windows PowerShell hoặc PowerShell ISE - cách 1: gõ "Set-ExecutionPolicy unrestricted" trong PowerShell và mở app với tư cách là quản trị viên (admin). Cách 2: mọi người có thể vào Windows Settings > System > Advanced > Terminal > PowerShell (nếu như mọi người dùng Windows 11) hoặc Windows Settings > Update & Security > For developers > PowerShell, bật "Change execution policy to allow local PowerShell scripts to run without signing. Require signing for remote scripts".
 
-### Instructions
-To get started with Interactive-Easy-GPU-PV, follow these steps:
-1) Make sure your system meets all the prerequisites mentioned in the documentation.
-2) Download the [Interactive-Easy-GPU-PV repository](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) and extract it to a folder on your computer. You can download it from the project's GitHub page.
-3) Search for Powershell ISE on your computer and run it as Administrator.
-4) Navigate to the extracted folder you downloaded and run the interactive script named "GPUP-management.ps1". Select "Create new VM with GPU acceleration" when prompted and set any required parameters. The script will start creating the VM, which may take 5-10 minutes depending on your system.
-5) Once the VM is created, open and sign into Parsec on the VM. You can use Parsec to connect to the VM at up to 4K60FPS.
-6) You're all set, enjoy!
+### Hướng dẫn cách làm:
+Để bắt đầu với Interactive-Easy-GPU-PV, mọi người hãy làm theo các bước sau:
+1) Hãy chắc chắn rằng máy vật lý của mọi người đạt đủ điều kiện được nhắc đến trong document này.
+2) Tải file [Interactive-Easy-GPU-PV repository](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
+3) Tìm và mở app Windows Powershell ISE trên máy và chạy app như một quản trị viên (admin).
+4) Tìm thư mục đã giải nén mà mọi người đã download xong và chạy script có tên "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN" (đối với những ai chưa quen tiếng Anh). Chọn "Tạo máy ảo mới với GPU tăng tốc đồ họa" hay "Create new VMInteractive-Easy-GPU-PV 
+Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://github.com/jamesstringerparsec/Easy-GPU-PV). Mục tiêu của project này là đơn giản hóa toàn bộ quy trình càng nhiều càng tốt. Script chính có tính tương tác khá nhiều, vì vậy mọi người không cần phải setting trước bất kỳ tham số (parameters) nào. Thay vào đó, các tham số có thể được chọn trong khi script đang chạy, giúp quy trình dễ dàng hơn nhiều.
 
-### Upgrading VM GPU Drivers after you update the host GPU Drivers
-To ensure proper functioning of the VM, it's important to update the GPU drivers inside the VM after updating the drivers on the host machine. To do this, follow these steps:
-1) After updating the GPU drivers on the host machine, reboot it.
-2) Open Powershell as an administrator, navigate to the extracted folder of the Interactive-Easy-GPU-PV repo and run the interactive script GPUP-management.ps1.
-3) Select action 3: Copy GPU Drivers from Host to VM. This will copy the updated GPU drivers from the host machine to the VM.
+![Administrator_-PowerShell-2023-03-21-16-38-00](https://user-images.githubusercontent.com/77991615/226651194-032db39b-291a-4cd4-a231-da5a215c9eee.gif)
+
+***Nội dung sau đây chủ yếu được trích từ dự án Easy-GPU-PV lúc đầu. Mình đã thực hiện một số sửa đổi, dịch sang ngôn ngữ tiếng Việt và improve để đảm bảo nội dung chính xác tình trạng hiện tại của dự án và cung cấp thông tin liên quan.***
+
+GPU-PV cho phép mọi người phân vùng hoặc chia sẻ card đồ họa rời (discrete GPU) hay card đồ họa tích hợp (on-board GPU) và gắn bộ nhớ VRAM của GPU vật lý vào máy ảo Hyper-V. Nó cũng giống như công nghệ dùng trong WSL (Windows Subsystem for Linux), và máy ảo tạm thời Windows Sandbox.
+
+Interactive-Easy-GPU-PV hướng đến mục tiêu tự động hóa các bước cần thiết để khởi động và chạy máy ảo được chia sẻ bộ nhớ VRAM từ GPU vật lý.  
+Project này cung cấp những nội dung sau:
+1) Tạo máy ảo có GPU tăng tốc đồ họa theo ý mọi người
+2) Tự động cài Windows vào máy ảo Hyper-V
+3) Phân vùng & chia sẻ bộ nhớ VRAM từ GPU mà mọi người chọn và sao chép các file driver cần thiết của GPU vào máy ảo
+4) Cài đặt [Parsec](https://parsec.app) vào máy ảo Hyper-V. Parsec là app điều khiển máy tính từ xa có độ trễ thấp và support độ phân giải 4K60FPS, mình recommend sử dụng app này để connect với máy ảo. Mọi người có thể xài Parsec miễn phí, không vì mục đích thương mại. Để sử dụng Parsec cho mục đích thương mại, đăng ký tài khoản [Parsec For Teams](https://parsec.app/teams)  
+5) Cài đặt Windows App để cung cấp phiên điều khiển từ xa được bật GPU tăng tốc đồ họa 3D. Lưu ý: khả năng tăng tốc đồ họa 3D trong phiên làm việc từ xa Microsoft RDP sẽ kém hơn bằng phiên làm việc từ xa khi dùng Parsec.
+
+### Các yêu cầu bắt buộc (PC & laptop requirements):
+* Một chiếc PC hoặc laptop mạnh sử dụng hệ điều hành Windows 10 (20H1 trở lên) với phiên bản Pro, Enterprise, Education, hoặc Windows 11 Pro, Enterprise, Education và Windows Server 2022. Windows 11 và Windows Server 2022 được ưu tiên vì khả năng tương thích (pass requirements) tốt hơn. Máy vật lý và máy ảo phải có phiên bản Windows giống nhau, vì việc không giống version của hệ điều hành có thể gây ra lỗi tương thích, BSOD hoặc các vấn đề khác. Ví dụ: Win11 25H2 (vật lý) đi cùng với Win11 25H2 (máy ảo).
+* PC cá nhân có card đồ họa rời như NVIDIA/AMD hoặc card đồ họa tích hợp như Intel. GPU phải hỗ trợ mã hóa video phần cứng (NVIDIA NVENC, Intel Quicksync hoặc AMD AMF).
+* Driver GPU phiên bản mới nhất từ ​​[Intel.com](https://www.intel.com/content/www/us/en/search.html#sort=relevancy&f:@tabfilter=[Downloads]&f:@stm_10385_en=[Graphics]) hoặc [AMD.com](https://www.amd.com/en/support) hoặc [NVIDIA.com](https://www.nvidia.com/download/index.aspx). Không nên dựa vào Device Manager hoặc Windows Update để cài driver. Điều quan trọng là phải đảm bảo mọi người đã cài đặt trình điều khiển mới nhất để tránh các sự cố tương thích và đảm bảo hiệu suất tối ưu.
+* File ISO Windows 10 mới nhất chính chủ của Microsoft [link tải tại đây](https://www.microsoft.com/en-gb/software-download/windows10ISO) / Windows 11 ISO [link tải tại đây](https://www.microsoft.com/en-us/software-download/windows11) - Mình khuyên mọi người đừng sử dụng Media Creation Tool, nếu không có link tải ISO trực tiếp (static) nào có sẵn, hãy làm theo [hướng dẫn này.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)
+* Ảo hóa được bật trên bo mạch chủ (VT-x, AMD-V hoặc SVM Mode) và [tính năng Hyper-V đã bật hoàn toàn](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) trên hệ điều hành Windows 10/11 (có yêu cầu khởi động lại).  
+* Cho phép các script PowerShell chạy trên hệ điều hành mà mọi người đang dùng: sử dụng Windows PowerShell hoặc PowerShell ISE - cách 1: gõ "Set-ExecutionPolicy unrestricted" trong PowerShell và mở app với tư cách là quản trị viên (admin). Cách 2: mọi người có thể vào Windows Settings > System > Advanced > Terminal > PowerShell (nếu như mọi người dùng Windows 11) hoặc Windows Settings > Update & Security > For developers > PowerShell, bật "Change execution policy to allow local PowerShell scripts to run without signing. Require signing for remote scripts".
+
+### Hướng dẫn cách làm:
+Để bắt đầu với Interactive-Easy-GPU-PV, mọi người hãy làm theo các bước sau:
+1) Hãy chắc chắn rằng máy vật lý của mọi người đạt đủ điều kiện được nhắc đến trong document này.
+2) Tải file [Interactive-Easy-GPU-PV repository](https://github.com/jamesstringerparsec/Easy-GPU-PV/archive/refs/heads/main.zip) và giải nén vào thư mục trên máy tính.
+3) Tìm và mở app Windows Powershell ISE trên máy và chạy app như một quản trị viên (admin).
+4) Tìm thư mục đã giải nén mà mọi người đã download xong và chạy script có tên "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN" (đối với những ai chưa biết tiếng Anh). Chọn "Tạo máy ảo mới với GPU tăng tốc đồ họa" hay "Create new VM with GPU acceleration" và setting các thông số cần thiết. Script sẽ bắt đầu tạo máy ảo sau khi setting tham số xong, có thể mất 5-10 phút tùy thuộc vào hệ thống của mọi người.
+5) Sau khi tạo xong máy ảo, hãy mở và đăng nhập vào Parsec trên giao diện máy ảo Windows. Mọi người có thể dùng Parsec để connect với máy ảo lên đến 4K60FPS (cần có điều kiện mạng tốt - Wi-Fi 5 trở lên hoặc LAN).
+6) Mọi việc đã xong, giờ mọi người có thể dùng luôn hoặc share cho bạn bè, hay ai đó không đủ điều kiện mua máy mới hoặc tiền nạp net cỏ.
+
+### Nâng cấp driver GPU của máy ảo Hyper-V sau khi cập nhật driver GPU trên máy vật lý
+Để đảm bảo máy ảo hoạt động tốt, điều quan trọng là phải cập nhật driver GPU bên trong VM sau khi cập nhật driver GPU thật trên máy vật lý. Để thực hiện việc này, hãy làm theo các bước sau:
+1) Sau khi update driver GPU trên máy vật lý, restart lại một lần nữa.
+2) Mở PowerShell ISE với tư cách admin, tìm thư mục giải nén Interactive-Easy-GPU-PV và chạy script "GPUP-management.ps1" hoặc "GPUPartitionSharingToVM-VN".
+3) Bấm số 3: "Copy GPU Drivers from Host to VM" hoặc "Sao chép toàn bộ file driver GPU từ máy vật lý tới máy ảo". Nó sẽ copy toàn bộ file driver GPU được update từ máy vật lý tới máy ảo.
 
 
-### Thanks to:  
-- [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) for creating EASY-GPU-PV project that was taken as a base as well as main part of this readme
-- [Hyper-ConvertImage](https://github.com/tabs-not-spaces/Hyper-ConvertImage) for creating an updated version of [Convert-WindowsImage](https://github.com/MicrosoftDocs/Virtualization-Documentation/tree/master/hyperv-tools/Convert-WindowsImage) that is compatible with Windows 10 and 11.
-- [gawainXX](https://github.com/gawainXX) for help [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) testing and pointing out bugs and feature improvements.  
+### Đặc biệt gửi lời cảm ơn tới:  
+- [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) đã tạo ra Easy-GPU-PV được coi là tài liệu gốc cũng như phần chính của tài liệu hướng dẫn này.
+- [Hyper-ConvertImage](https://github.com/tabs-not-spaces/Hyper-ConvertImage) đã tạo ra phiên bản được nâng cấp của [Convert-WindowsImage](https://github.com/MicrosoftDocs/Virtualization-Documentation/tree/master/hyperv-tools/Convert-WindowsImage) hỗ trợ cho cả Windows 10 và Windows 11.
+- [gawainXX](https://github.com/gawainXX) giúp đỡ [jamesstringerparsec](https://github.com/jamesstringerparsec/Easy-GPU-PV) trong việc thử nghiệm, chỉ ra lỗi và cải tiến tính năng.  
 
-
-### Notes:    
-- If you install Parsec Virtual Display Driver (Parsec VDD), after you have signed into Parsec on the VM, always use Parsec to connect to the VM. Keep the Microsft Hyper-V Video adapter disabled. Using RDP and Hyper-V Enhanced Session mode will result in broken behaviour and black screens in Parsec. Using Parsec will allow you to use up to 4k60 FPS. 
-- If you get "ERROR  : Cannot bind argument to parameter 'Path' because it is null." this probably means you used Media Creation Tool to download the ISO.  You unfortunately cannot use that, if you don't see a direct ISO download link at the Microsoft page, follow [this guide.](https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)  
-- Your GPU on the host will have a Microsoft driver in device manager, rather than an nvidia/intel/amd driver. As long as it doesn't have a yellow triangle over top of the device in device manager, it's working correctly.  
-- A powered on display / HDMI dummy dongle must be plugged into the GPU to allow Parsec to capture the screen.  You only need one of these per host machine regardless of number of VM's.
-- If your computer is super fast it may get to the login screen before the audio driver (VB Cable) and Parsec display driver are installed, but fear not! They should soon install.  
-- The screen may go black for times up to 10 seconds in situations when UAC prompts appear, applications go in and out of fullscreen and when you switch between video codecs in Parsec - not really sure why this happens, it's unique to GPU-P machines and seems to recover faster at 1280x720.
-- Vulkan renderer is unavailable and GL games may or may not work.  [This](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff?SilentAuth=1&wa=wsignin1.0#activetab=pivot:overviewtab) may help with some OpenGL apps.  
-- If you do not have administrator permissions on the machine it means you set the username and vmname to the same thing, these needs to be different.  
-- AMD Polaris GPUS like the RX 580 do not support hardware video encoding via GPU Paravirtualization at this time.  
-- To download Windows ISOs with Rufus, it must have "Check for updates" enabled.
-Dd acceleration with Parsec VDD
+### Lưu ý:    
+- Nếu mọi người cài đặt driver màn hình ảo của Parsec (Parsec Virtual Display Driver), sau khi đăng nhập vào Parsec trên máy ảo, hãy luôn sử dụng Parsec để kết nối với máy ảo. Luôn giữ cho driver Microsft Hyper-V tắt. Sử dụng RDP và chế độ nâng cao của Hyper-V (Enhanced Session) sẽ dẫn đến hiện tượng lỗi và màn hình đen trong Parsec. Sử dụng Parsec sẽ cho phép mọi người trải nghiệm với độ phân giải đạt 4K60FPS. 
+- Nếu gặp lỗi "ERROR  : Cannot bind argument to parameter 'Path' because it is null.", điều này có nghĩa là mọi nguòi đã sử dụng Media Creation Tool để tải và tạo file ISO. Thật tiếc là mọi người không thể sử dụng tool này nếu không thấy liên kết tải xuống ISO trực tiếp trên trang web của Microsoft (static link), hãy làm theo [hướng dẫn này].(https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus)  
+- GPU trên máy vật lý sẽ có trình điều khiển Microsoft trong Device Manager, thay vì trình điều khiển NVIDIA/Intel/AMD. Miễn là nó không có hình tam giác màu vàng ở trên cùng của thiết bị, thì nó hoạt động bình thường.  
+- Cần phải cắm một cáp dongle giả lập HDMI vào GPU để Parsec có thể ghi lại màn hình. Mọi người chỉ cần một thiết bị dongle này cho mỗi máy vật lý bất kể số lượng máy ảo.
+- Nếu máy tính chạy nhanh, có thể máy sẽ enter màn hình đăng nhập trước khi driver card âm thanh ảo (VB-AUDIO Cable) và driver hiển thị khi Parsec được cài đặt, đừng quá lo. Driver này sẽ sớm được cài đặt trên máy ảo.
+- Màn hình có thể chuyển sang màu đen trong thời gian lên đến 10 giây trong những trường hợp thông báo UAC (User Account Control) xuất hiện, ứng dụng vào và ra khỏi chế độ toàn màn hình và khi chuyển đổi giữa các codec video trong Parsec - không thực sự chắc chắn tại sao điều này lại xảy ra, hiện tượng này chỉ xảy ra với máy GPU-P và có vẻ phục hồi nhanh hơn ở độ phân giải 1280x720.
+- Kết xuất Vulkan không khả dụng và trò chơi hỗ trợ OpenGL có thể hoạt động hoặc không, tùy vào từng game mọi người cài trên máy ảo. [Link này](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff?SilentAuth=1&wa=wsignin1.0#activetab=pivot:overviewtab) có thể giúp với một số ứng dụng hỗ trợ OpenGL.  
+- Nếu mọi người không có quyền quản trị viên trên máy, điều đó có nghĩa là mọi người đã đặt tên người dùng và tên máy ảo giống nhau, hai tham số này phải khác nhau. 
+- Các card đồ họa thuộc kiến trúc AMD Polaris như RX 580 hiện không hỗ trợ mã hóa video phần cứng thông qua ảo hóa nửa phần GPU.
+- Để tải và cài file ISO Windows sử dụng Rufus, phải bật "Check for updates".
