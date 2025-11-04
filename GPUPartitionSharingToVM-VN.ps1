@@ -4162,120 +4162,7 @@ function Get-VMParams {
         $params.VHDPath = Get-VMHost | Select-Object VirtualHardDiskPath -ExpandProperty VirtualHardDiskPath
     } 
     
-    $VMParam = New-VMParameter -name 'SizeBytes' -title "Vui lòng gõ dung lượng ổ đĩa cứng ảo VHD [mặc định: $($params.SizeBytes / 1Gb)GB] (nhấn `"Return`" để đặt làm mặc định)" -range @(24Gb, 1024Gb) -AllowNull
-    $null = Get-VMParam -VMParam $VMParam
-    
-    $VMParam = New-VMParameter -name 'MemoryAmount' -title "Vui lòng gõ dung lượng RAM ảo mà bạn muốn sử dụng/chia cho máy ảo [mặc định: $($params.MemoryAmount / 1Gb)GB] (nhấn `"Return`" để đặt làm mặc định)" -range @(2Gb, (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum) -AllowNull
-    $null = Get-VMParam -VMParam $VMParam
-    
-    $VMParam = New-VMParameter -name 'DynamicMemoryEnabled' -title "Bật tính năng Dynamic Memory (bộ nhớ tự động) hay không? [Y/N] [mặc định: $(BoolToYesNo $params.DynamicMemoryEnabled)] (nhấn `"Return`" để bật)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-    $null = Get-VMParam -VMParam $VMParam
-    if ($params.DynamicMemoryEnabled -eq $true) {
-        $VMParam = New-VMParameter -name 'MemoryMaximum' -title "Vui lòng thay đổi dung lượng RAM tự động (Dynamic Memory) cho máy ảo [mặc định: $(($params.MemoryMaximum / 1Gb))GB] (nhấn `"Return`" để đặt làm mặc định)" -range @($params.MemoryAmount, 128Gb) -AllowNull
-        $null = Get-VMParam -VMParam $VMParam
-    }
-
-    $VMParam = New-VMParameter -name 'CPUCores' -title "Vui lòng gõ số luồng (1 nhân - core = 2 luồng - threads) của CPU ảo [mặc định: $($params.CPUCores)] (nhấn `"Return`" để đặt làm mặc định)" -range @(1, (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors) -AllowNull
-    $null = Get-VMParam -VMParam $VMParam
- 
-    $switch = Get-HyperVSwitchAdapter
-    $null = Set-CorrectHyperVSwitchAdapterDialog -Name $switch
-    
-    $null = Get-VMGpuPartitionAdapterFriendlyName
-    $null = Get-GPUDedicatedResourcePercentage 
-    
-    Write-Host "Guest OS Parameters:"  -ForegroundColor Yellow
-	$null = Open-ISOImageDialog 
- 	$params.DriveLetter = Mount-ISOReliable -SourcePath $params.SourcePath 
-
-    $Editions = Get-ISOWindowsEditions -DriveLetter $params.DriveLetter
-    if ($null -ne $Editions) {
-        $VMParam = New-VMParameter -name 'Edition' -title "Chọn phiên bản Windows cho máy ảo [mặc định: $($Editions.Count)] (nhấn `"Return`" để bỏ qua)" -range @(1, $Editions.Count) -AllowNull $true
-        $null = Get-VMParam -VMParam $VMParam
-    } else {
-        $param.Edition = 0
-    }
-	
-    $null = Get-GuestOSCredentials
-    
-    $VMParam = New-VMParameter -name 'Autologon' -title "Bật tính năng autologon (đăng nhập tự động) vào hệ điều hành Windows của máy ảo hay không? [Y/N] [mặc định: $(BoolToYesNo $params.Autologon)] (nhấn `"Return`" để bỏ qua)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-    $null = Get-VMParam -VMParam $VMParam
- 
-    $VMParam = New-VMParameter -name 'CopyRegionalSettings' -title "Sao chép toàn bộ dữ liệu cài đặt (Windows Settings) của máy vật lý vào máy ảo hay không? [Y/N] [mặc định: Y] (nhấn `"Return`" để bỏ qua)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-    $null = Get-VMParam -VMParam $VMParam
-
-    $VMParam = New-VMParameter -name 'NumLock' -title "Bật key NumLock khi đăng nhập hay không? [Y/N] [mặc định: $(BoolToYesNo $params.NumLock)] (nhấn `"Return`" để bật)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-    $null = Get-VMParam -VMParam $VMParam 
-
-    Get-RemoteDesktopApp
-    if ($params.Parsec -eq $true) { 
-        $VMParam = New-VMParameter -name 'ParsecVDD' -title "Cài driver màn hình ảo của Parsec (Parsec Virtual Display Driver) hay không? [Y/N] [mặc định: $(BoolToYesNo $params.ParsecVDD)] (nhấn `"Return`" để bỏ qua)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-        if ((Get-VMParam -VMParam $VMParam) -eq $true) {
-            $VMParam = New-VMParameter -name 'DisableHVDD' -title "Ngắt driver màn hình của máy ảo Hyper-V (Microsoft Hyper-V Video) hay không? [Y/N] [mặc định: $(BoolToYesNo $params.DisableHVDD)] (nhấn `"Return`" để bỏ qua)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-            $null = Get-VMParam -VMParam $VMParam
-        }
-        $VMParam = New-VMParameter -name 'ParsecForTeamsSubscriber' -title "Bạn có phải là người đã đăng ký gói Parsec for Teams Subscriber hay không? [Y/N] [mặc định: N] (nhấn `"Return`" để bỏ qua)" -AllowedValues @{Y = $true; N = $false} -AllowNull
-        if ((Get-VMParam -VMParam $VMParam) -eq 0) {
-            $VMParam = New-VMParameter -name 'Team_ID' -title "Vui lòng nhập ID của gói Parsec for Teams Subscribers mà bạn đã đăng ký (nhấn `"Return`" để bỏ qua)" -AllowNull
-            $null = Get-VMParam -VMParam $VMParam
-            
-            $VMParam = New-VMParameter -name 'Key' -title "Vui lòng nhập mã bảo mật của gói Parsec for Teams Subscribers mà bạn đã đăng ký (nhấn `"Return`" để bỏ qua)" -AllowNull
-            $null = Get-VMParam -VMParam $VMParam       
-        }
-    }
-}
-#========================================================================
-
-#========================================================================
-function Start-VMandConnect {
-    param([string]$Name)
-    Start-VM -Name $Name
-    Start-Sleep -s 5
-    If ((Get-Process VMconnect -ErrorAction SilentlyContinue).Length -eq 0) {
-        VMconnect $env:COMPUTERNAME $Name
-    }
-}
-#========================================================================
-
-#========================================================================
-#Script executing section
-Clear-Host
-Write-Host "Hệ thống đang kiểm tra..." -ForegroundColor Yellow
-
-If ((Is-Administrator) -and (Get-WindowsCompatibleOS) -and (Get-HyperVEnabled)) {
-    Write-Host "Kiểm tra thành công: " -NoNewline -ForegroundColor Yellow 
-    Write-Host "Hệ thống đã tương thích" -ForegroundColor DarkGreen 
-    
-    $Action = Get-Action
-    Write-Host "`r`nCác thông tin bắt buộc:" -ForegroundColor Yellow
-    
-    switch ($Action) {
-        1 { Get-VMParams
-            New-GPUEnabledVM @params }
-        2 { Get-VMObjects
-            $null = Get-VMGpuPartitionAdapterFriendlyName
-            Get-GPUDedicatedResourcePercentage
-            Delete-VMGPUPartitionAdapter
-            Pass-VMGPUPartitionAdapter 
-            Copy-GPUDrivers }
-        3 { Get-VMObjects
-            if ((Get-VMGpuPartitionAdapterFriendlyName -GetPassedGPU) -eq $true) {
-                Get-GPUDedicatedResourcePercentage
-                Pass-VMGPUPartitionAdapter 
-            }
-            Copy-GPUDrivers }
-        4 { Get-VMObjects
-            Delete-VMGPUPartitionAdapter }
-        5 { Get-VMObjects
-            Pass-VMGPUPartitionAdapter -OnlyResources }
-    }
-    
-    if ($Global:ServerOS -eq $true) {
-        Set-ServerOSGroupPolicies
-    }
-    
-    If ($Global:StateWasRunning){
-        Write-Host "Previous State was running so starting VM..."
+    $ảo..."
         Start-VMandConnect -Name $Global:VM.Name
     }
     
@@ -4296,7 +4183,7 @@ If ((Is-Administrator) -and (Get-WindowsCompatibleOS) -and (Get-HyperVEnabled)) 
         } elseif (($params.Parsec -eq $true) -and ($params.RDP -eq $true)) {
             $m += "Khi nào thành công, Bạn hãy cài đặt và đăng nhập vào Parsec (ứng dụng điều khiển máy tính từ xa hỗ trợ độ trễ thấp và 4K60FPS)
                 `rvà kết nối tới máy ảo sử dụng Parsec từ một máy tính khác. 
-                `rhoặc cài đặt ứng dụng Windows App trên Windows, MacOS, iOS và Android
+                `rHoặc cài đặt ứng dụng Windows App trên Windows, MacOS, iOS và Android
                 `rvà kết nối tới máy ảo sử dụng tên đăng nhập và mật khẩu bạn đã đặt cho user trên máy ảo.
                 `rChúc bạn thành công!
                 `rĐăng ký/đăng nhập vào Parsec tại địa chỉ: https://parsec.app
