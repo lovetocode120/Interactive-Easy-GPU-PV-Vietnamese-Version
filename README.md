@@ -15,7 +15,7 @@ Project này cung cấp những nội dung sau:
 2) Tự động cài Windows vào máy ảo Hyper-V
 3) Phân vùng & chia sẻ bộ nhớ VRAM từ GPU mà mọi người chọn và sao chép các file driver cần thiết của GPU vào máy ảo
 4) Cài đặt [Parsec](https://parsec.app) vào máy ảo Hyper-V. Parsec là app điều khiển máy tính từ xa có độ trễ thấp và support độ phân giải 4K60FPS, mình recommend sử dụng app này để connect với máy ảo. Mọi người có thể xài Parsec miễn phí, không vì mục đích thương mại. Để sử dụng Parsec cho mục đích thương mại, đăng ký tài khoản [Parsec For Teams](https://parsec.app/teams).
-5) Cài đặt Windows App để cung cấp phiên điều khiển từ xa được bật GPU tăng tốc đồ họa 3D. Lưu ý: khả năng tăng tốc đồ họa 3D trong phiên làm việc từ xa Microsoft RDP sẽ kém hơn bằng phiên làm việc từ xa khi dùng Parsec.
+5) Cài đặt Windows App để cung cấp phiên điều khiển từ xa được bật GPU tăng tốc đồ họa 3D. Lưu ý: khả năng tăng tốc đồ họa 3D trong phiên làm việc từ xa Microsoft RDP sẽ kém hơn phiên làm việc từ xa khi dùng Parsec.
 
 ### Các yêu cầu bắt buộc (PC & laptop requirements):
 * Một chiếc PC hoặc laptop mạnh sử dụng hệ điều hành Windows 10 (20H1 trở lên) với phiên bản Pro, Enterprise, Education, hoặc Windows 11 Pro, Enterprise, Education và Windows Server 2022. Windows 11 và Windows Server 2022 được ưu tiên vì khả năng tương thích (pass requirements) tốt hơn. Máy vật lý và máy ảo phải có phiên bản Windows giống nhau, vì việc không giống version của hệ điều hành có thể gây ra lỗi tương thích, BSOD hoặc các vấn đề khác. Ví dụ: Win10 22H2 (vật lý) đi cùng với Win10 22H2 (máy ảo) hoặc Win11 25H2 (vật lý) đi cùng với Win11 25H2 (máy ảo).
