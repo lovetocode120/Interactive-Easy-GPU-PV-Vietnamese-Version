@@ -5,6 +5,8 @@ Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://gi
 
 ![GPUSharingScriptDemo](https://github.com/lovetocode120/Interactive-Easy-GPU-PV-Vietnamese-Version/blob/main/GPUSharingScriptDemo.png)
 
+![GPUSharingScriptDemoVideo](https://github.com/lovetocode120/Interactive-Easy-GPU-PV-Vietnamese-Version/blob/main/GPUSharingScriptDemoVideo.gif)
+
 ***Nội dung sau đây chủ yếu được trích từ dự án Easy-GPU-PV lúc đầu. Mình đã thực hiện một số sửa đổi, dịch sang ngôn ngữ tiếng Việt và improve để đảm bảo nội dung chính xác tình trạng hiện tại của dự án và cung cấp thông tin liên quan.***
 
 GPU-PV cho phép mọi người phân vùng hoặc chia sẻ card đồ họa rời (discrete GPU) hay card đồ họa tích hợp (on-board GPU) và gắn bộ nhớ VRAM của GPU vật lý vào máy ảo Hyper-V. Nó cũng giống như công nghệ dùng trong WSL (Windows Subsystem for Linux), và máy ảo tạm thời Windows Sandbox.
