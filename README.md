@@ -3,8 +3,6 @@ Một nhánh fork đang trong quá trình develop của [Easy-GPU-PV](https://gi
 
 ![Administrator_-PowerShell-2023-03-21-16-38-00](https://user-images.githubusercontent.com/77991615/226651194-032db39b-291a-4cd4-a231-da5a215c9eee.gif)
 
-![GPUSharingScriptDemo](https://github.com/lovetocode120/Interactive-Easy-GPU-PV-Vietnamese-Version/blob/main/GPUSharingScriptDemo.png)
-
 ![GPUSharingScriptDemoVideo](https://github.com/lovetocode120/Interactive-Easy-GPU-PV-Vietnamese-Version/blob/main/GPUSharingScriptDemoVideo.gif)
 
 ***Nội dung sau đây chủ yếu được trích từ dự án Easy-GPU-PV lúc đầu. Mình đã thực hiện một số sửa đổi, dịch sang ngôn ngữ tiếng Việt và improve để đảm bảo nội dung chính xác tình trạng hiện tại của dự án và cung cấp thông tin liên quan.***
